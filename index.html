@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexJobs - Find Remote Jobs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A9ECC;
+            --secondary-color: #2B5876;
+            --accent-color: #FF6B35;
+            --text-color: #333;
+            --bg-color: #fff;
+            --card-bg: #f8f9fa;
+            --hero-bg: linear-gradient(135deg, #f8f9fa 0%, #e9f5fa 100%);
+            --shadow-color: rgba(0,0,0,0.1);
+            --header-bg: #fff;
+            --footer-bg: #2B5876;
+            --footer-text: #fff;
+            --testimonial-bg: #f8f9fa;
+            --border-color: transparent;
+            --success-bg: linear-gradient(135deg, #f8f9fa 0%, #e9f5fa 100%);
+            --feature-card-hover: rgba(74, 158, 204, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #5CBBF6;
+            --secondary-color: #3A7299;
+            --accent-color: #FF8155;
+            --text-color: #e0e0e0;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --hero-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --shadow-color: rgba(0,0,0,0.3);
+            --header-bg: #2d2d2d;
+            --footer-bg: #1a1a1a;
+            --footer-text: #e0e0e0;
+            --testimonial-bg: #2d2d2d;
+            --border-color: #3A7299;
+            --success-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            --feature-card-hover: rgba(92, 187, 246, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: var(--header-bg);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+            transition: color 0.3s ease;
+        }
+
+        .nav-buttons button {
+            margin-left: 15px;
+            padding: 10px 25px;
+            border: 2px solid #4A9ECC;
+            background: white;
+            color: #4A9ECC;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-buttons button.signup {
+            background: #4A9ECC;
+            color: white;
+        }
+
+        .nav-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 158, 204, 0.3);
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 60px;
+            background: var(--hero-bg);
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(74, 158, 204, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.2;
+            color: #2B5876;
+            margin-bottom: 20px;
+        }
+
+        .hero .highlight {
+            color: #FF6B35;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .cta-button {
+            padding: 16px 35px;
+            background: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #E55A2B;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-circle {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #4A9ECC 0%, #7CB8DD 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-circle::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+        }
+
+        .hero-circle img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .badge {
+            position: absolute;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-remote {
+            top: 80px;
+            left: -20px;
+        }
+
+        .badge-remote::before {
+            content: '📍';
+        }
+
+        .badge-benefits {
+            bottom: 100px;
+            right: -30px;
+        }
+
+        .badge-benefits::before {
+            content: '🎯';
+        }
+
+        .companies {
+            padding: 60px 0 40px;
+            text-align: center;
+            background: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .companies h2 {
+            font-size: 32px;
+            color: var(--secondary-color);
+            margin-bottom: 40px;
+            padding: 0 60px;
+        }
+
+        .company-logos-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 20px 0;
+            background: var(--card-bg);
+        }
+
+        .company-logos {
+            display: flex;
+            width: 200%;
+            animation: slide 40s linear infinite;
+        }
+
+        .logo-slide {
+            display: flex;
+            width: 50%;
+            justify-content: space-around;
+            align-items: center;
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        .company-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-color);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+        }
+
+        .company-logo:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(45deg);
+        }
+
+        .trust-section {
+            text-align: center;
+            padding: 60px 60px;
+            background: var(--card-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .trust-section h2 {
+            font-size: 36px;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-color);
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .rating-score {
+            background: #4A9ECC;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .stars {
+            color: #FFC107;
+            font-size: 20px;
+        }
+
+        .review-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .features {
+            padding: 80px 60px;
+            background: var(--bg-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border-color: var(--primary-color);
+            background: var(--feature-card-hover);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .feature-card p {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .testimonial {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid var(--accent-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            background: #4A9ECC;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .press {
+            padding: 60px 60px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .press h3 {
+            font-size: 28px;
+            color: #2B5876;
+            margin-bottom: 40px;
+        }
+
+        .press-logos {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .press-logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #666;
+            opacity: 0.7;
+        }
+
+        .work-type {
+            padding: 80px 60px;
+            background: linear-gradient(135deg, #2B5876 0%, #4A9ECC 100%);
+            text-align: center;
+        }
+
+        .work-type h2 {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .work-type-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto 40px;
+        }
+
+        .work-type-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .work-type-card:hover {
+            transform: translateY(-5px);
+            border-color: #FF6B35;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .work-type-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .work-type-card h4 {
+            font-size: 20px;
+            color: #2B5876;
+            margin-bottom: 10px;
+        }
+
+        .work-type-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .verification {
+            padding: 80px 60px;
+            background: white;
+            text-align: center;
+        }
+
+        .verification h2 {
+            font-size: 32px;
+            color: #2B5876;
+            margin-bottom: 10px;
+        }
+
+        .verification h3 {
+            font-size: 28px;
+            color: #4A9ECC;
+            margin-bottom: 50px;
+        }
+
+        .scam-alerts {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .scam-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            flex: 1;
+            text-align: left;
+        }
+
+        .scam-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .success-story {
+            padding: 80px 60px;
+            background: var(--success-bg);
+            transition: background 0.3s ease;
+        }
+
+        .success-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .success-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .success-circle {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #C8E6F5 0%, #A5D8EE 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .success-text {
+            flex: 1;
+        }
+
+        .success-text h2 {
+            font-size: 36px;
+            color: #2B5876;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .success-text .highlight {
+            color: #4A9ECC;
+            text-decoration: underline;
+        }
+
+        .success-text p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 40px 60px 20px;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .decorative-star {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .star-1 { top: 100px; left: 50px; color: #FF6B35; }
+        .star-2 { bottom: 150px; right: 80px; color: #4A9ECC; animation-delay: 1s; }
+
+        @media (max-width: 768px) {
+            header, .hero, .companies, .trust-section, .features, .work-type, .verification, .success-story {
+                padding: 40px 20px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .features-grid, .work-type-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .success-content {
+                flex-direction: column;
+            }
+
+            .hero-circle, .success-circle {
+                width: 300px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">flex<span>jobs</span></div>
+        <div class="nav-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button>Log In</button>
+            <button class="signup">Sign Up</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="decorative-star star-1">✦</div>
+        <div class="hero-content">
+            <h1>Find Genuine<br><span class="highlight">Remote Jobs</span> at<br>Companies That<br>Get It</h1>
+            <p>Stress less. Browse and apply to expert-verified, scam-free jobs near you (and across the globe).</p>
+            <button class="cta-button">Start Your Remote Job Search Now!</button>
+        </div>
+        <div class="hero-image">
+            <div class="hero-circle">
+                <div class="badge badge-remote">100% Remote</div>
+                <div class="badge badge-benefits">Career Benefits</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="companies">
+        <h2>Awesome Companies Hiring for Remote Jobs*</h2>
+        <div class="company-logos-container">
+            <div class="company-logos">
+                <div class="logo-slide">
+                    <div class="company-logo">Amazon</div>
+                    <div class="company-logo">DoorDash</div>
+                    <div class="company-logo">Kaplan</div>
+                    <div class="company-logo">Spotify</div>
+                    <div class="company-logo">ModSquad</div>
+                    <div class="company-logo">HubSpot</div>
+                    <div class="company-logo">Reddit</div>
+                    <div class="company-logo">Netflix</div>
+                    <div class="company-logo">Zillow</div>
+                </div>
+                <div class="logo-slide">
+                    <div class="company-logo">Amazon</div>
+                    <div class="company-logo">DoorDash</div>
+                    <div class="company-logo">Kaplan</div>
+                    <div class="company-logo">Spotify</div>
+                    <div class="company-logo">ModSquad</div>
+                    <div class="company-logo">HubSpot</div>
+                    <div class="company-logo">Reddit</div>
+                    <div class="company-logo">Netflix</div>
+                    <div class="company-logo">Zillow</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust-section">
+        <h2>The #1 Site for Remote Jobs</h2>
+        <div class="rating">
+            <div class="rating-score">4.6</div>
+            <div>
+                <div class="stars">★★★★★</div>
+                <div class="review-count">14,000+ Reviews</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Higher Quality Listings</h3>
+                <p>We check listings, job ads, scams, or spam to sift through. Our team expertly hand-screens everything to bring you only legitimate work-from-home job descriptions, so you'll know what's hiring.</p>
+                <div class="testimonial">
+                    <p>"I will pay to not waste odd hours of my time chasing junk ads and drowning in all kinds of spam. It's preventing me from finding what I need."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div>
+                            <strong>Susan</strong><br>
+                            <span>Senior Work-from-Home Jobseeker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🛠️</div>
+                <h3>Personalized Tools</h3>
+                <p>Save and apply to jobs faster with actively sign our newsletter. Get search tips real-time or forward.</p>
+                <div class="testimonial">
+                    <p>"The site provides multiple tools that are better and more customizable to your use-case than other job-search websites. This has a wealth of information."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">C</div>
+                        <div>
+                            <strong>Crystal S.</strong><br>
+                            <span>Remote Job Seeker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Save Time with Auto-Apply</h3>
+                <p>Our Auto-Apply feature is unique to FlexJobs! Land your remote job faster by applying to jobs with the click of one button!</p>
+                <div class="testimonial">
+                    <p>"I used FlexJobs like crazy. I must have applied for 50+ jobs via FlexJobs' auto-apply, which means I spent a significant amount of hours weekly with the service."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">K</div>
+                        <div>
+                            <strong>Kamil</strong><br>
+                            <span>Landed an All-remote job</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="press">
+        <h3>As seen on*</h3>
+        <div class="press-logos">
+            <div class="press-logo">TODAY</div>
+            <div class="press-logo">WSJ</div>
+            <div class="press-logo">FOX</div>
+            <div class="press-logo">CNBC</div>
+            <div class="press-logo">CNN</div>
+            <div class="press-logo">USA TODAY</div>
+        </div>
+    </section>
+
+    <section class="work-type">
+        <h2>What kind of remote work are you looking for?</h2>
+        <div class="work-type-grid">
+            <div class="work-type-card">
+                <div class="work-type-icon">🏠</div>
+                <h4>100% Remote</h4>
+                <p>No office contact and job offers that never require you to show up in person.</p>
+            </div>
+            <div class="work-type-card">
+                <div class="work-type-icon">📅</div>
+                <h4>Hybrid Remote</h4>
+                <p>A little of both! Some days at the office, some days working from your own space.</p>
+            </div>
+            <div class="work-type-card">
+                <div class="work-type-icon">🏢</div>
+                <h4>Option for Remote</h4>
+                <p>Could include office days, but with the flexibility for remote work.</p>
+            </div>
+        </div>
+        <button class="cta-button">Next</button>
+    </section>
+
+    <section class="verification">
+        <h2>Avoid Scams & Junk</h2>
+        <h3>We Verify 100% of Our Job Listings</h3>
+        <div class="scam-alerts">
+            <div class="scam-card">
+                <div class="scam-icon">⚠️</div>
+                <p><strong>Scam Alert:</strong> LinkedIn Users Hit by Romance Fraud Cyber Jobs Offers</p>
+            </div>
+            <div class="scam-card">
+                <div class="scam-icon">📰</div>
+                <p><strong>A Job Offer That Seems Too Good to Be True? Trust It Might Be a Scam.</strong></p>
+            </div>
+        </div>
+        <div class="decorative-star star-2">✦</div>
+    </section>
+
+    <section class="success-story">
+        <div class="success-content">
+            <div class="success-image">
+                <div class="success-circle"></div>
+            </div>
+            <div class="success-text">
+                <h2>Over 10 Million Job Seekers Have Used FlexJobs Since 2007 To Find A <span class="highlight">Better Way To Work</span></h2>
+                <p>Meet Susan. Like millions of job seekers, years looking for something better after losing her full-time jobs. She tried several standard employment boards where she was getting more spam than serious jobs. After months of being beat up emotionally, she was going to be flexible but would still help further her career.</p>
+                <p>That's when the idea for FlexJobs came. A site where job seekers could find professional work. Beginning work-from-home, freelance, and part-time jobs. FlexJobs is different because it puts the member and their needs first, taking on the burden of finding, vetting, researching, and researching job postings for greater remote jobs.</p>
+                <button class="cta-button">Start Your Remote Job Search Now!</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">TERMS AND CONDITIONS</a>
+            <a href="#">PRIVACY POLICY</a>
+            <a href="#">CONTACT US</a>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2007-2025 Flexjobs. All Rights Reserved.</p>
+            <p style="margin-top: 10px; font-size: 11px;">The content and design of this webpage are owned by respective copyright holders and may not be reproduced without permission.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            
+            // Update theme toggle button
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            
+            // Save theme preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Set initial theme based on user preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+        // Smooth scroll for CTA buttons
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', () => {
+                console.log('CTA clicked - Ready to start job search!');
+            });
+        });
+
+        // Add hover effects for work type cards
+        document.querySelectorAll('.work-type-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.work-type-card').forEach(c => {
+                    c.style.borderColor = 'transparent';
+                });
+                card.style.borderColor = '#FF6B35';
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .work-type-card, .scam-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
