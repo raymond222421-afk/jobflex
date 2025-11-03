@@ -1,0 +1,322 @@
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobFlex - Flexible Jobs for Your Life</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1><a href="index.html">JobFlex</a></h1>
+                </div>
+                <nav class="nav-menu">
+                    <a href="index.html" class="nav-link">Find Jobs</a>
+                    <a href="#categories" class="nav-link">Categories</a>
+                    <a href="#featured-jobs" class="nav-link">Featured Jobs</a>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn-login">Log In</button>
+                    <button class="btn-signup">Sign Up</button>
+                </div>
+                <button class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="index.html" class="mobile-nav-link">Find Jobs</a>
+        <a href="#categories" class="mobile-nav-link">Categories</a>
+        <a href="#featured-jobs" class="mobile-nav-link">Featured Jobs</a>
+        <div class="mobile-auth">
+            <button class="btn-login">Log In</button>
+            <button class="btn-signup">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login to JobFlex</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" id="signupName" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <select id="signupCountry" required>
+                        <option value="">Select Country</option>
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <!-- Add more countries as needed -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="signupPhone" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="btn-submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Find Your Perfect<br>Flexible Job</h1>
+                <p class="hero-subtitle">Discover remote, part-time, and flexible job opportunities from top companies</p>
+                
+                <!-- Search Area -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <div class="search-field">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Job title, keyword, or company" id="jobSearch">
+                        </div>
+                        <div class="location-field">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" placeholder="City, state, or remote" id="locationSearch">
+                        </div>
+                        <button class="search-btn" onclick="searchJobs()">
+                            <i class="fas fa-search"></i>
+                            <span>Search Jobs</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Categories -->
+    <section id="categories" class="categories">
+        <div class="container">
+            <h2 class="section-title">Popular Job Categories</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="goToWizard('remote')">
+                    <div class="category-icon">
+                        <i class="fas fa-laptop-house"></i>
+                    </div>
+                    <h3>Remote Jobs</h3>
+                    <p>Work from anywhere</p>
+                    <span class="job-count">2,500+ jobs</span>
+                </div>
+                
+                <div class="category-card" onclick="goToWizard('part-time')">
+                    <div class="category-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Part-Time</h3>
+                    <p>Flexible hours</p>
+                    <span class="job-count">1,800+ jobs</span>
+                </div>
+                
+                <div class="category-card" onclick="goToWizard('freelance')">
+                    <div class="category-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Freelance</h3>
+                    <p>Project-based work</p>
+                    <span class="job-count">950+ jobs</span>
+                </div>
+                
+                <div class="category-card" onclick="goToWizard('contract')">
+                    <div class="category-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Contract</h3>
+                    <p>Temporary positions</p>
+                    <span class="job-count">1,200+ jobs</span>
+                </div>
+                
+                <div class="category-card" onclick="goToWizard('flexible-schedule')">
+                    <div class="category-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Flexible Schedule</h3>
+                    <p>Work-life balance</p>
+                    <span class="job-count">3,100+ jobs</span>
+                </div>
+                
+                <div class="category-card" onclick="goToWizard('temporary')">
+                    <div class="category-icon">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <h3>Temporary</h3>
+                    <p>Short-term roles</p>
+                    <span class="job-count">800+ jobs</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Jobs -->
+    <section id="featured-jobs" class="featured-jobs">
+        <div class="container">
+            <h2 class="section-title">Featured Jobs</h2>
+            <div class="jobs-grid">
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="company-logo">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="job-info">
+                            <h3>Senior UX Designer</h3>
+                            <p class="company">TechCorp Inc.</p>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> Remote</p>
+                        </div>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag">Full-time</span>
+                        <span class="tag">Remote</span>
+                    </div>
+                    <p class="salary">$80,000 - $120,000</p>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="company-logo">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="job-info">
+                            <h3>Frontend Developer</h3>
+                            <p class="company">StartupXYZ</p>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                        </div>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag">Part-time</span>
+                        <span class="tag">Flexible</span>
+                    </div>
+                    <p class="salary">$60,000 - $90,000</p>
+                </div>
+                
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="company-logo">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="job-info">
+                            <h3>Marketing Manager</h3>
+                            <p class="company">GrowthCo</p>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                        </div>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag">Contract</span>
+                        <span class="tag">Remote</span>
+                    </div>
+                    <p class="salary">$70,000 - $100,000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Find Your Dream Job?</h2>
+                <p>Join thousands of professionals who found their perfect flexible job through JobFlex</p>
+                <button class="cta-button" onclick="goToWizard('all')">
+                    <i class="fas fa-rocket"></i>
+                    Start Job Search
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>JobFlex</h3>
+                    <p>Your gateway to flexible employment opportunities</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Job Seekers</h4>
+                    <ul>
+                        <li><a href="#">Browse Jobs</a></li>
+                        <li><a href="#">Career Advice</a></li>
+                        <li><a href="#">Salary Guide</a></li>
+                        <li><a href="#">Resume Builder</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Employers</h4>
+                    <ul>
+                        <li><a href="#">Post a Job</a></li>
+                        <li><a href="#">Talent Solutions</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 JobFlex. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

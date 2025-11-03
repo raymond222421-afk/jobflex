@@ -5,15 +5,25 @@ function toggleTheme() {
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     body.setAttribute('data-theme', newTheme);
     
-    // Update theme toggle button
-    const themeToggle = document.querySelector('.theme-toggle');
-    themeToggle.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+    // Update theme toggle buttons
+    document.querySelectorAll('.theme-toggle').forEach(button => {
+        button.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+    });
     
     // Save theme preference
     localStorage.setItem('theme', newTheme);
 }
 
-// Set initial theme based on user preference (default to dark)
+// Handle search and redirect to categories page
+function handleSearch() {
+    const searchQuery = document.getElementById('searchInput')?.value || '';
+    const locationQuery = document.getElementById('locationInput')?.value || '';
+    
+    // Redirect to categories page with search parameters
+    window.location.href = `categories.html?search=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(locationQuery)}`;
+}
+
+// Set initial theme and initialize components
 document.addEventListener('DOMContentLoaded', () => {
     // Theme initialization
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -33,10 +43,68 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenuToggle.setAttribute('aria-expanded', isMenuOpen.toString());
     });
 
-    // Smooth scroll for CTA buttons
+    // Modal functionality
+    const loginButton = document.querySelector('button.login');
+    const signupButton = document.querySelector('button.signup');
+    const loginModal = document.getElementById('loginModal');
+    const signupModal = document.getElementById('signupModal');
+    const closeButtons = document.querySelectorAll('.close-modal');
+
+    // Open modals
+    loginButton?.addEventListener('click', () => {
+        loginModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
+
+    signupButton?.addEventListener('click', () => {
+        signupModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
+
+    // Close modals
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Close modal on outside click
+    window.addEventListener('click', (e) => {
+        if (e.target === loginModal || e.target === signupModal) {
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Search navigation
+    const searchNav = document.querySelector('.search-nav');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > 100) { // Show after 100px scroll
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                searchNav?.classList.remove('visible');
+            } else {
+                // Scrolling up
+                searchNav?.classList.add('visible');
+            }
+        } else {
+            searchNav?.classList.remove('visible');
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+
+    // Connect CTA buttons to wizard
     document.querySelectorAll('.cta-button').forEach(button => {
         button.addEventListener('click', () => {
-            console.log('CTA clicked - Ready to start job search!');
+            window.location.href = 'wizard.html';
         });
     });
 
@@ -65,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    document.querySelectorAll('.feature-card, .work-type-card, .scam-card').forEach(el => {
+    document.querySelectorAll('.feature-card, .work-type-card, .scam-card, .category-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'all 0.6s ease';

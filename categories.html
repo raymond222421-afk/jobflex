@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Categories - FlexJobs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/categories.css">
+    <link rel="stylesheet" href="css/search-nav.css">
+    <link rel="stylesheet" href="css/jobs.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">F</div>
+                flex<span>work</span>
+            </a>
+            <nav class="main-nav">
+                <a href="categories.html" class="active">Browse Jobs</a>
+                <a href="#">Companies</a>
+                <a href="#">Resources</a>
+            </nav>
+            <div class="nav-buttons">
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <a href="auth.html#login" class="btn login">Log In</a>
+                <a href="auth.html#signup" class="btn signup">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-nav visible">
+        <div class="search-box">
+            <div class="search-field">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Job title or keyword" id="jobSearch">
+            </div>
+            <div class="location-field">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" placeholder="Location" id="locationSearch">
+            </div>
+            <button class="search-btn" onclick="filterJobs()">
+                <i class="fas fa-search"></i>
+                Search Jobs
+            </button>
+        </div>
+        <div class="filter-options">
+            <select id="salaryFilter" onchange="filterJobs()">
+                <option value="">Salary Range</option>
+                <option value="0-50000">$0 - $50,000</option>
+                <option value="50000-80000">$50,000 - $80,000</option>
+                <option value="80000-120000">$80,000 - $120,000</option>
+                <option value="120000+">$120,000+</option>
+            </select>
+            <select id="typeFilter" onchange="filterJobs()">
+                <option value="">Job Type</option>
+                <option value="full-time">Full Time</option>
+                <option value="part-time">Part Time</option>
+                <option value="contract">Contract</option>
+            </select>
+            <select id="experienceFilter" onchange="filterJobs()">
+                <option value="">Experience Level</option>
+                <option value="entry">Entry Level</option>
+                <option value="mid">Mid Level</option>
+                <option value="senior">Senior Level</option>
+            </select>
+        </div>
+    </div>
+
+    <main class="jobs-container">
+        <aside class="categories-sidebar">
+            <h3>Job Categories</h3>
+            <div class="category-filters">
+                <label class="category-filter">
+                    <input type="checkbox" value="software" onchange="filterJobs()">
+                    Software Development
+                </label>
+                <label class="category-filter">
+                    <input type="checkbox" value="design" onchange="filterJobs()">
+                    Design
+                </label>
+                <label class="category-filter">
+                    <input type="checkbox" value="marketing" onchange="filterJobs()">
+                    Marketing
+                </label>
+                <label class="category-filter">
+                    <input type="checkbox" value="sales" onchange="filterJobs()">
+                    Sales
+                </label>
+                <label class="category-filter">
+                    <input type="checkbox" value="customer-service" onchange="filterJobs()">
+                    Customer Service
+                </label>
+                <label class="category-filter">
+                    <input type="checkbox" value="finance" onchange="filterJobs()">
+                    Finance
+                </label>
+                <label class="category-filter">
+                    <input type="checkbox" value="healthcare" onchange="filterJobs()">
+                    Healthcare
+                </label>
+                <label class="category-filter">
+                    <input type="checkbox" value="education" onchange="filterJobs()">
+                    Education
+                </label>
+            </div>
+        </aside>
+
+        <section class="jobs-grid" id="jobsGrid">
+            <!-- Jobs will be populated here by JavaScript -->
+        </section>
+    </main>
+
+    <script>
+        // Sample job data - In a real app, this would come from an API
+        const jobs = [
+            {
+                id: 1,
+                title: "Senior Full Stack Developer",
+                company: "TechCorp",
+                location: "Remote",
+                salary: 120000,
+                type: "full-time",
+                category: "software",
+                experience: "senior",
+                description: "Leading tech company seeking an experienced full stack developer to architect and build scalable web applications. Join our innovative team and work on cutting-edge projects.",
+                requirements: ["5+ years experience", "React", "Node.js", "MongoDB", "AWS", "TypeScript"]
+            },
+            {
+                id: 2,
+                title: "UI/UX Designer",
+                company: "DesignHub",
+                location: "Remote",
+                salary: 90000,
+                type: "full-time",
+                category: "design",
+                experience: "mid",
+                description: "Join our creative team as a UI/UX designer. Create beautiful, intuitive interfaces that delight users and drive engagement.",
+                requirements: ["3+ years experience", "Figma", "Adobe Suite", "User Research", "Prototyping"]
+            },
+            {
+                id: 3,
+                title: "Product Marketing Manager",
+                company: "GrowthCo",
+                location: "Remote",
+                salary: 95000,
+                type: "full-time",
+                category: "marketing",
+                experience: "senior",
+                description: "Drive product marketing strategy and execution for our SaaS platform. Lead go-to-market initiatives and product launches.",
+                requirements: ["4+ years experience", "B2B Marketing", "Content Strategy", "Analytics"]
+            },
+            {
+                id: 4,
+                title: "DevOps Engineer",
+                company: "CloudTech",
+                location: "Remote",
+                salary: 115000,
+                type: "full-time",
+                category: "software",
+                experience: "mid",
+                description: "Build and maintain our cloud infrastructure. Implement CI/CD pipelines and ensure system reliability.",
+                requirements: ["3+ years experience", "AWS", "Docker", "Kubernetes", "Jenkins"]
+            },
+            {
+                id: 5,
+                title: "Content Writer",
+                company: "ContentKing",
+                location: "Remote",
+                salary: 65000,
+                type: "full-time",
+                category: "marketing",
+                experience: "entry",
+                description: "Create engaging content for our blog, social media, and marketing materials. SEO expertise required.",
+                requirements: ["2+ years experience", "SEO", "Content Strategy", "Social Media"]
+            },
+            {
+                id: 6,
+                title: "Mobile App Developer",
+                company: "AppWorks",
+                location: "Remote",
+                salary: 100000,
+                type: "full-time",
+                category: "software",
+                experience: "mid",
+                description: "Develop innovative mobile applications for iOS and Android platforms. Experience with React Native preferred.",
+                requirements: ["3+ years experience", "React Native", "iOS", "Android", "API Integration"]
+            },
+            {
+                id: 7,
+                title: "Customer Success Manager",
+                company: "ServicePro",
+                location: "Remote",
+                salary: 75000,
+                type: "full-time",
+                category: "customer-service",
+                experience: "mid",
+                description: "Lead customer success initiatives and ensure high customer satisfaction and retention rates.",
+                requirements: ["3+ years experience", "Customer Support", "SaaS", "Account Management"]
+            },
+            {
+                id: 8,
+                title: "Data Scientist",
+                company: "DataCorp",
+                location: "Remote",
+                salary: 130000,
+                type: "full-time",
+                category: "software",
+                experience: "senior",
+                description: "Apply machine learning and statistical analysis to solve complex business problems.",
+                requirements: ["5+ years experience", "Python", "ML", "SQL", "Statistics"]
+            },
+            {
+                id: 9,
+                title: "Graphic Designer",
+                company: "CreativeStudio",
+                location: "Remote",
+                salary: 70000,
+                type: "full-time",
+                category: "design",
+                experience: "mid",
+                description: "Create visually stunning designs for digital and print media. Strong branding experience required.",
+                requirements: ["3+ years experience", "Adobe Suite", "Branding", "Typography"]
+            },
+            {
+                id: 10,
+                title: "Sales Development Rep",
+                company: "SalesForce",
+                location: "Remote",
+                salary: 60000,
+                type: "full-time",
+                category: "sales",
+                experience: "entry",
+                description: "Generate and qualify leads for our enterprise sales team. Meet or exceed monthly quotas.",
+                requirements: ["1+ years experience", "CRM", "Lead Generation", "Communication"]
+            },
+            {
+                id: 11,
+                title: "Frontend Developer",
+                company: "WebTech",
+                location: "Remote",
+                salary: 95000,
+                type: "full-time",
+                category: "software",
+                experience: "mid",
+                description: "Build responsive and accessible web applications using modern frontend technologies.",
+                requirements: ["3+ years experience", "React", "CSS", "JavaScript", "Accessibility"]
+            },
+            {
+                id: 12,
+                title: "HR Manager",
+                company: "PeopleFirst",
+                location: "Remote",
+                salary: 85000,
+                type: "full-time",
+                category: "human-resources",
+                experience: "senior",
+                description: "Lead HR initiatives including recruitment, employee relations, and policy development.",
+                requirements: ["5+ years experience", "HR Management", "Employee Relations", "Policy Development"]
+            },
+            {
+                id: 13,
+                title: "Technical Writer",
+                company: "DocuTech",
+                location: "Remote",
+                salary: 75000,
+                type: "full-time",
+                category: "content",
+                experience: "mid",
+                description: "Create clear, concise technical documentation for our software products.",
+                requirements: ["3+ years experience", "Technical Writing", "API Documentation", "DITA"]
+            },
+            {
+                id: 14,
+                title: "Project Manager",
+                company: "ProjectPro",
+                location: "Remote",
+                salary: 95000,
+                type: "full-time",
+                category: "project-management",
+                experience: "senior",
+                description: "Lead multiple software development projects from inception to delivery.",
+                requirements: ["5+ years experience", "Agile", "Scrum", "Project Planning"]
+            },
+            {
+                id: 15,
+                title: "Social Media Manager",
+                company: "SocialBuzz",
+                location: "Remote",
+                salary: 65000,
+                type: "full-time",
+                category: "marketing",
+                experience: "mid",
+                description: "Manage and grow our social media presence across multiple platforms.",
+                requirements: ["3+ years experience", "Social Media Marketing", "Content Creation", "Analytics"]
+            },
+            {
+                id: 16,
+                title: "Backend Developer",
+                company: "ServerTech",
+                location: "Remote",
+                salary: 110000,
+                type: "full-time",
+                category: "software",
+                experience: "senior",
+                description: "Design and implement scalable backend services and APIs.",
+                requirements: ["5+ years experience", "Java", "Spring Boot", "Microservices"]
+            },
+            {
+                id: 17,
+                title: "Financial Analyst",
+                company: "FinTech",
+                location: "Remote",
+                salary: 80000,
+                type: "full-time",
+                category: "finance",
+                experience: "mid",
+                description: "Perform financial analysis and reporting for our growing startup.",
+                requirements: ["3+ years experience", "Financial Analysis", "Excel", "Forecasting"]
+            },
+            {
+                id: 18,
+                title: "QA Engineer",
+                company: "QualityTech",
+                location: "Remote",
+                salary: 85000,
+                type: "full-time",
+                category: "software",
+                experience: "mid",
+                description: "Ensure software quality through automated and manual testing.",
+                requirements: ["3+ years experience", "Selenium", "Test Automation", "JIRA"]
+            },
+            {
+                id: 19,
+                title: "Product Manager",
+                company: "ProductLabs",
+                location: "Remote",
+                salary: 115000,
+                type: "full-time",
+                category: "product",
+                experience: "senior",
+                description: "Lead product strategy and roadmap for our flagship product.",
+                requirements: ["5+ years experience", "Product Management", "Agile", "Data Analysis"]
+            },
+            {
+                id: 20,
+                title: "Security Engineer",
+                company: "SecureNet",
+                location: "Remote",
+                salary: 120000,
+                type: "full-time",
+                category: "software",
+                experience: "senior",
+                description: "Implement and maintain security measures across our infrastructure.",
+                requirements: ["5+ years experience", "Security+", "CISSP", "Penetration Testing"]
+            }
+        ];
+
+        function createJobCard(job) {
+            return `
+                <div class="job-card" data-category="${job.category}" onclick="window.location.href='wizard.html?job=${job.id}'">
+                    <div class="job-header">
+                        <h3>${job.title}</h3>
+                        <span class="salary">$${job.salary.toLocaleString()}/year</span>
+                    </div>
+                    <div class="company-info">
+                        <span class="company-name">${job.company}</span>
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag">${job.type}</span>
+                        <span class="tag">${job.experience} level</span>
+                    </div>
+                    <p class="job-description">${job.description}</p>
+                    <div class="requirements">
+                        <h4>Requirements:</h4>
+                        <ul>
+                            ${job.requirements.map(req => `<li>${req}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            `;
+        }
+
+        function filterJobs() {
+            const searchTerm = document.getElementById('jobSearch').value.toLowerCase();
+            const location = document.getElementById('locationSearch').value.toLowerCase();
+            const salary = document.getElementById('salaryFilter').value;
+            const type = document.getElementById('typeFilter').value;
+            const experience = document.getElementById('experienceFilter').value;
+            const selectedCategories = Array.from(document.querySelectorAll('.category-filter input:checked'))
+                .map(input => input.value);
+
+            const filteredJobs = jobs.filter(job => {
+                const matchesSearch = job.title.toLowerCase().includes(searchTerm) ||
+                    job.company.toLowerCase().includes(searchTerm);
+                const matchesLocation = !location || job.location.toLowerCase().includes(location);
+                const matchesSalary = !salary || matchesSalaryRange(job.salary, salary);
+                const matchesType = !type || job.type === type;
+                const matchesExperience = !experience || job.experience === experience;
+                const matchesCategory = selectedCategories.length === 0 || 
+                    selectedCategories.includes(job.category);
+
+                return matchesSearch && matchesLocation && matchesSalary && 
+                    matchesType && matchesExperience && matchesCategory;
+            });
+
+            document.getElementById('jobsGrid').innerHTML = filteredJobs
+                .map(job => createJobCard(job)).join('');
+        }
+
+        function matchesSalaryRange(jobSalary, range) {
+            const [min, max] = range.split('-').map(Number);
+            if (range === '120000+') return jobSalary >= 120000;
+            return jobSalary >= min && jobSalary <= max;
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            filterJobs();
+        });
+    </script>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>For Job Seekers</h4>
+                <ul>
+                    <li><a href="#">Browse Jobs</a></li>
+                    <li><a href="#">Companies</a></li>
+                    <li><a href="#">Career Resources</a></li>
+                    <li><a href="#">Salary Calculator</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>For Employers</h4>
+                <ul>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Employer Resources</a></li>
+                    <li><a href="#">Partnerships</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FlexJobs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

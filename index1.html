@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +10,7 @@
     <link rel="stylesheet" href="css/press.css">
     <link rel="stylesheet" href="css/enhanced-hero.css">
     <link rel="stylesheet" href="css/hero-enhanced.css">
-    <link rel="stylesheet" href="css/modal.css">
-    <link rel="stylesheet" href="css/search-nav.css">
-    <link rel="stylesheet" href="css/categories.css">
-    <link rel="stylesheet" href="css/wizard.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body>
     <header>
@@ -27,8 +21,8 @@
             </a>
             <div class="nav-buttons">
                 <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-                <a href="auth.html#login" class="btn login">Log In</a>
-                <a href="auth.html#signup" class="btn signup">Sign Up</a>
+                <button class="login">Log In</button>
+                <button class="signup">Sign Up</button>
             </div>
             <button class="mobile-menu-toggle" aria-label="Toggle menu">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -43,46 +37,10 @@
     <div class="mobile-menu">
         <div class="nav-buttons">
             <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-            <a href="auth.html#login" class="btn login">Log In</a>
-            <a href="auth.html#signup" class="btn signup">Sign Up</a>
+            <button class="login">Log In</button>
+            <button class="signup">Sign Up</button>
         </div>
     </div>
-
-    <!-- Search Navigation -->
-    <nav class="search-nav visible">
-        <div class="search-box">
-            <div class="search-field">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Job title or keyword" id="searchInput">
-            </div>
-            <div class="location-field">
-                <i class="fas fa-map-marker-alt"></i>
-                <input type="text" placeholder="Location" id="locationInput">
-            </div>
-            <button class="search-btn" onclick="handleSearch()">
-                <i class="fas fa-search"></i>
-                Search Jobs
-            </button>
-        </div>
-    </nav>
-
-    <!-- Search Navigation -->
-    <nav class="search-nav">
-        <div class="search-box">
-            <div class="search-field">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Job title or keyword">
-            </div>
-            <div class="location-field">
-                <i class="fas fa-map-marker-alt"></i>
-                <input type="text" placeholder="Location">
-            </div>
-            <button class="search-btn">
-                <i class="fas fa-search"></i>
-                Search Jobs
-            </button>
-        </div>
-    </nav>
 
     <section class="hero">
         <div class="hero-background">
@@ -129,58 +87,6 @@
                     <span class="badge-icon">💰</span>
                     <span>Competitive Pay</span>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Job Categories -->
-    <section class="categories-section">
-        <div class="categories-title">
-            <h2>Explore Job Categories</h2>
-            <p>Discover opportunities across various industries and specializations</p>
-        </div>
-        <div class="categories-grid">
-            <a href="categories.html?category=software" class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <h4 class="category-title">Software Development</h4>
-                <p class="category-count">2,345 jobs</p>
-            </a>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
-                <h4 class="category-title">Design</h4>
-                <p class="category-count">1,786 jobs</p>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h4 class="category-title">Marketing</h4>
-                <p class="category-count">1,543 jobs</p>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-headset"></i>
-                </div>
-                <h4 class="category-title">Customer Support</h4>
-                <p class="category-count">1,234 jobs</p>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-coins"></i>
-                </div>
-                <h4 class="category-title">Finance</h4>
-                <p class="category-count">987 jobs</p>
-            </div>
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-tasks"></i>
-                </div>
-                <h4 class="category-title">Project Management</h4>
-                <p class="category-count">876 jobs</p>
             </div>
         </div>
     </section>
@@ -505,89 +411,6 @@
         </div>
     </section>
 
-    <!-- Login Modal -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Welcome Back!</h2>
-            <form class="auth-form">
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                <div class="form-options">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="rememberMe">
-                        Remember me
-                    </label>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
-                </div>
-                <button type="submit" class="auth-button">Log In</button>
-                <div class="social-login">
-                    <p>Or continue with</p>
-                    <div class="social-buttons">
-                        <button type="button" class="social-button google">
-                            <i class="fab fa-google"></i>
-                        </button>
-                        <button type="button" class="social-button github">
-                            <i class="fab fa-github"></i>
-                        </button>
-                        <button type="button" class="social-button linkedin">
-                            <i class="fab fa-linkedin"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Signup Modal -->
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Create an Account</h2>
-            <form class="auth-form">
-                <div class="form-group">
-                    <label for="signupName">Full Name</label>
-                    <input type="text" id="signupName" required>
-                </div>
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" required>
-                </div>
-                <div class="form-options">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="termsAccept" required>
-                        I agree to the Terms and Privacy Policy
-                    </label>
-                </div>
-                <button type="submit" class="auth-button">Sign Up</button>
-                <div class="social-login">
-                    <p>Or sign up with</p>
-                    <div class="social-buttons">
-                        <button type="button" class="social-button google">
-                            <i class="fab fa-google"></i>
-                        </button>
-                        <button type="button" class="social-button github">
-                            <i class="fab fa-github"></i>
-                        </button>
-                        <button type="button" class="social-button linkedin">
-                            <i class="fab fa-linkedin"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <footer>
         <div class="footer-links">
             <a href="#">TERMS AND CONDITIONS</a>
@@ -602,3 +425,4 @@
 
     <script src="js/script.js"></script>
 </body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search Wizard - FlexJobs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/wizard.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">F</div>
+                flex<span>work</span>
+            </a>
+            <nav class="main-nav">
+                <a href="categories.html">Browse Jobs</a>
+                <a href="#">Companies</a>
+                <a href="#">Resources</a>
+            </nav>
+            <div class="nav-buttons">
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <a href="auth.html#login" class="btn login">Log In</a>
+                <a href="auth.html#signup" class="btn signup">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+   
+    <!-- Job Search Wizard -->
+    <main class="wizard-main">
+        <div class="container">
+            <div class="wizard-header">
+                <h1>Find Your Perfect Job</h1>
+                <p>Use our advanced search to discover opportunities that match your preferences</p>
+            </div>
+
+            <!-- Search Filters -->
+            <div class="search-filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="jobTitle">Job Title / Keywords</label>
+                        <input type="text" id="jobTitle" placeholder="e.g. Software Engineer, Marketing Manager">
+                    </div>
+                    <div class="filter-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" placeholder="City, State or Remote">
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="jobType">Job Type</label>
+                        <select id="jobType">
+                            <option value="">Any</option>
+                            <option value="full-time">Full-time</option>
+                            <option value="part-time">Part-time</option>
+                            <option value="contract">Contract</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="temporary">Temporary</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="workStyle">Work Style</label>
+                        <select id="workStyle">
+                            <option value="">Any</option>
+                            <option value="remote">Remote</option>
+                            <option value="hybrid">Hybrid</option>
+                            <option value="on-site">On-site</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="salaryRange">Salary Range</label>
+                        <select id="salaryRange">
+                            <option value="">Any</option>
+                            <option value="30k-50k">$30,000 - $50,000</option>
+                            <option value="50k-70k">$50,000 - $70,000</option>
+                            <option value="70k-100k">$70,000 - $100,000</option>
+                            <option value="100k+">$100,000+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button class="search-jobs-btn" id="searchJobsBtn">
+                        <i class="fas fa-search"></i>
+                        Search Jobs
+                    </button>
+                    <button class="clear-filters-btn" id="clearFiltersBtn">
+                        <i class="fas fa-times"></i>
+                        Clear Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div class="search-results">
+                <div class="results-header">
+                    <h2 id="resultsCount">Loading jobs...</h2>
+                    <div class="sort-options">
+                        <label for="sortBy">Sort by:</label>
+                        <select id="sortBy">
+                            <option value="relevance">Relevance</option>
+                            <option value="date">Date Posted</option>
+                            <option value="salary">Salary</option>
+                            <option value="company">Company</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="job-listings" id="jobListings">
+                    <!-- Job listings will be populated by JavaScript -->
+                </div>
+
+                <div class="pagination">
+                    <button id="prevPage" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                        Previous
+                    </button>
+                    <span id="pageInfo">Page 1 of 1</span>
+                    <button id="nextPage">
+                        Next
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Application Wizard Modal -->
+    <div id="applicationWizard" class="modal">
+        <div class="modal-content" style="max-width: 800px; padding: 0; overflow: auto;">
+            <span class="close-modal">&times;</span>
+            <div class="wizard-container">
+                <div class="wizard-header">
+                    <div class="container">
+                        <h1 class="logo">JobFlex</h1>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="step-indicator" id="stepIndicator">Step 1 of 6</span>
+                    </div>
+                </div>
+
+                <div class="wizard-content">
+                    <div class="container">
+                        <!-- Step 1: Work Type -->
+                        <div class="wizard-step active" id="step1">
+                            <h2>What type of work are you looking for?</h2>
+                            <div class="options-grid">
+                                <div class="option-card" data-value="remote">
+                                    <h3>Remote Work</h3>
+                                    <p>Work from anywhere, 100% remote</p>
+                                </div>
+                                <div class="option-card" data-value="hybrid">
+                                    <h3>Hybrid Work</h3>
+                                    <p>Combination of remote and office work</p>
+                                </div>
+                                <div class="option-card" data-value="flexible">
+                                    <h3>Flexible Schedule</h3>
+                                    <p>Flexible hours and schedule</p>
+                                </div>
+                                <div class="option-card" data-value="freelance">
+                                    <h3>Freelance/Contract</h3>
+                                    <p>Project-based or contract work</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Salary -->
+                        <div class="wizard-step" id="step2">
+                            <h2>What's your desired salary range?</h2>
+                            <div class="options-grid">
+                                <div class="option-card" data-value="30k-50k">
+                                    <h3>$30k - $50k</h3>
+                                    <p>Entry level positions</p>
+                                </div>
+                                <div class="option-card" data-value="50k-75k">
+                                    <h3>$50k - $75k</h3>
+                                    <p>Mid-level positions</p>
+                                </div>
+                                <div class="option-card" data-value="75k-100k">
+                                    <h3>$75k - $100k</h3>
+                                    <p>Senior level positions</p>
+                                </div>
+                                <div class="option-card" data-value="100k+">
+                                    <h3>$100k+</h3>
+                                    <p>Executive level positions</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Location -->
+                        <div class="wizard-step" id="step3">
+                            <h2>Where are you located?</h2>
+                            <div class="form-group">
+                                <input type="text" id="locationInput" placeholder="Enter your city, state, or country" class="wizard-input">
+                            </div>
+                            <div class="options-grid">
+                                <div class="option-card" data-value="us">
+                                    <h3>United States</h3>
+                                </div>
+                                <div class="option-card" data-value="canada">
+                                    <h3>Canada</h3>
+                                </div>
+                                <div class="option-card" data-value="uk">
+                                    <h3>United Kingdom</h3>
+                                </div>
+                                <div class="option-card" data-value="other">
+                                    <h3>Other</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Job Categories -->
+                        <div class="wizard-step" id="step4">
+                            <h2>What type of role interests you?</h2>
+                            <div class="options-grid">
+                                <div class="option-card" data-value="technology">
+                                    <h3>Technology</h3>
+                                    <p>Software, IT, Development</p>
+                                </div>
+                                <div class="option-card" data-value="marketing">
+                                    <h3>Marketing</h3>
+                                    <p>Digital marketing, Content, SEO</p>
+                                </div>
+                                <div class="option-card" data-value="design">
+                                    <h3>Design</h3>
+                                    <p>UI/UX, Graphic design, Creative</p>
+                                </div>
+                                <div class="option-card" data-value="sales">
+                                    <h3>Sales</h3>
+                                    <p>Sales, Business development</p>
+                                </div>
+                                <div class="option-card" data-value="customer-service">
+                                    <h3>Customer Service</h3>
+                                    <p>Support, Success, Relations</p>
+                                </div>
+                                <div class="option-card" data-value="finance">
+                                    <h3>Finance</h3>
+                                    <p>Accounting, Banking, Investment</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Education -->
+                        <div class="wizard-step" id="step5">
+                            <h2>What's your education level?</h2>
+                            <div class="options-grid">
+                                <div class="option-card" data-value="high-school">
+                                    <h3>High School</h3>
+                                </div>
+                                <div class="option-card" data-value="associates">
+                                    <h3>Associate's Degree</h3>
+                                </div>
+                                <div class="option-card" data-value="bachelors">
+                                    <h3>Bachelor's Degree</h3>
+                                </div>
+                                <div class="option-card" data-value="masters">
+                                    <h3>Master's Degree</h3>
+                                </div>
+                                <div class="option-card" data-value="phd">
+                                    <h3>PhD/Doctorate</h3>
+                                </div>
+                                <div class="option-card" data-value="other">
+                                    <h3>Other/Prefer not to say</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Experience -->
+                        <div class="wizard-step" id="step6">
+                            <h2>How much experience do you have?</h2>
+                            <div class="options-grid">
+                                <div class="option-card" data-value="entry">
+                                    <h3>Entry Level</h3>
+                                    <p>0-2 years</p>
+                                </div>
+                                <极客 2
+                                    <h3>Mid Level</h3>
+                                    <p>3-5 years</p>
+                                </div>
+                                <div class="option-card" data-value="senior">
+                                    <h3>Senior Level</h3>
+                                    <p>6-10 years</p>
+                                </div>
+                                <div class="option-card" data-value="expert">
+                                    <h3>Expert Level</h3>
+                                    <p>10+ years</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loading Screen -->
+                        <div class="wizard-step" id="loadingStep">
+                            <div class="loading-content">
+                                <div class="loading-spinner"></div>
+                                <h2>Finding your perfect matches...</h2>
+                                <p>We're searching through thousands of verified remote jobs</p>
+                                <div class="loading-stats">
+                                    <div class="loading-stat">
+                                        <span class="loading-number" id="jobsFound">0</span>
+                                        <span>Jobs Found</span>
+                                    </极客 2
+                                    <div class="loading-stat">
+                                        <span class="loading-number" id="companiesMatched">0</span>
+                                        <span>Companies</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Results -->
+                        <div class="wizard-step" id="resultsStep">
+                            <div class="results-content">
+                                <h2>Congratulations! We found over <span id="finalJobCount">2,847</span> remote jobs for you!</h2>
+                                <div class="results-stats">
+                                    <div class="result-stat">
+                                        <span class="stat-number" id="activeJobs">2,847</span>
+                                        <span class="stat-label">Active Remote Jobs</span>
+                                    </div>
+                                    <div class="result-stat">
+                                        <span class="stat-number" id="newJobs">156</span>
+                                        <span class="stat-label">New Jobs This Week</span>
+                                    </div>
+                                    <div class="result-stat">
+                                        <span class="stat-number" id="topCompanies">89</span>
+                                        <span class="stat-label">Top Companies Hiring</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-cta btn-large" id="startTrialBtn">
+                                    Start Your Free Trial
+                                </button>
+                                <p class="results-note">Access all jobs with a free trial - no credit card required</p>
+                            </div>
+                        </div>
+
+                        <div class="wizard-navigation">
+                            <button class="btn btn-outline" id="prevBtn">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </button>
+                            <button class="btn btn-cta" id="nextBtn">
+                                Continue <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/f极客auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="script.js" defer></script>
+    <script src="wizard.js" defer></script>
+</body>
+</html>
