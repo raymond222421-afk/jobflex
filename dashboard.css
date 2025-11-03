@@ -1,0 +1,40 @@
+/* ===== DASHBOARD STYLES ===== */
+.dashboard {
+    margin-top: 80px;
+    padding: 2rem 0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.profile-card {
+    grid-column: 1 / -1; /* Full width */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.applications-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.applications-table th {
+    background: #f8f9fa;
+    text-align: left;
+    padding: 12px;
+}
+
+.status-pending { color: #f59e0b; }
+.status-processing { color: #3b82f6; }
+.status-accepted { color: #10b981; }
+.status-declined { color: #ef4444; }

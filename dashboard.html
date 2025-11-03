@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - JobFlex</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard {
+            margin-top: 80px;
+            padding: 2rem 0;
+            background: #f8fafc;
+            min-height: calc(100vh - 80px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .profile-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+        }
+
+        .profile-card h2 {
+            color: white;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .profile-info p {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .profile-info strong {
+            font-weight: 600;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        .btn-edit-profile {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit-profile:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .applications-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .applications-table th {
+            background: #f8fafc;
+            text-align: left;
+            padding: 1rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .applications-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .status-select {
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .status-select:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .status-pending { color: #f59e0b; }
+        .status-processing { color: #3b82f6; }
+        .status-accepted { color: #10b981; }
+        .status-declined { color: #ef4444; }
+
+        .status-note {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .referral-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        #referralLink {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .btn-copy {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-copy:hover {
+            background: #4338ca;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header would be included from your main template -->
+    
+    <main class="dashboard">
+        <div class="container">
+            <h1 style="margin-bottom: 2rem; font-size: 2rem; color: #1e293b;">Your Dashboard</h1>
+            
+            <div class="dashboard-grid">
+                <!-- Profile Card (Full Width) -->
+                <div class="dashboard-card profile-card">
+                    <h2><i class="fas fa-user"></i> Profile Information</h2>
+                    <div class="profile-info" id="userProfile">
+                        <!-- Dynamically loaded -->
+                    </div>
+                    <button class="btn-edit-profile">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+
+                <!-- Applications Table -->
+                <div class="dashboard-card">
+                    <h2><i class="fas fa-file-alt"></i> Job Applications</h2>
+                    <table class="applications-table">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Company</th>
+                                <th>Status</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsList">
+                            <!-- Dynamically loaded -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Referral Section -->
+                <div class="dashboard-card">
+                    <h2><i class="fas fa-share-alt"></i> Your Referral Link</h2>
+                    <p>Share this link to earn rewards</p>
+                    <div class="referral-container">
+                        <input type="text" id="referralLink" readonly>
+                        <button class="btn-copy" onclick="copyReferral()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
