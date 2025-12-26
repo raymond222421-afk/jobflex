@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FlexJobs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/search-nav.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern Header Styling */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.7);
+            border-bottom: 1px solid rgba(74, 158, 204, 0.1);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        [data-theme="dark"] header {
+            background: rgba(18, 18, 18, 0.8);
+            border-bottom-color: rgba(92, 187, 246, 0.15);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            transition: padding 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            color: var(--accent-color);
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            animation: rotate 2s infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotateZ(0deg); }
+            100% { transform: rotateZ(360deg); }
+        }
+
+        .logo:hover .logo-icon {
+            animation-play-state: running;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: rgba(74, 158, 204, 0.1);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(74, 158, 204, 0.2);
+            transform: rotate(20deg);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: rgba(92, 187, 246, 0.15);
+        }
+
+        [data-theme="dark"] .theme-toggle:hover {
+            background: rgba(92, 187, 246, 0.25);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+        }
+
+        .btn.login {
+            color: var(--primary-color);
+            background: transparent;
+            border-color: var(--primary-color);
+        }
+
+        .btn.login:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(74, 158, 204, 0.3);
+        }
+
+        .btn.signup {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn.signup:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(74, 158, 204, 0.4);
+        }
+
+        /* About Page Specific Styles */
+        .about-hero {
+            background: linear-gradient(135deg, rgba(74, 158, 204, 0.05) 0%, rgba(255, 107, 53, 0.02) 100%);
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(74, 158, 204, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .about-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .about-hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .about-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .about-section {
+            margin-bottom: 100px;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .about-section:nth-child(1) { animation-delay: 0.2s; }
+        .about-section:nth-child(2) { animation-delay: 0.3s; }
+        .about-section:nth-child(3) { animation-delay: 0.4s; }
+        .about-section:nth-child(4) { animation-delay: 0.5s; }
+        .about-section:nth-child(5) { animation-delay: 0.6s; }
+
+        .about-section h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--primary-color);
+            animation: expandWidth 0.8s ease-out forwards;
+        }
+
+        @keyframes expandWidth {
+            to { width: 100%; }
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .about-section p:hover {
+            color: var(--primary-color);
+        }
+
+        .mission-statement {
+            background: linear-gradient(135deg, rgba(74, 158, 204, 0.08) 0%, rgba(255, 107, 53, 0.04) 100%);
+            border: 2px solid rgba(74, 158, 204, 0.2);
+            padding: 50px 40px;
+            border-radius: 16px;
+            margin: 50px 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .mission-statement::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(74, 158, 204, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+        }
+
+        .mission-statement p {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 158, 204, 0.1);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .value-card:nth-child(1) { animation-delay: 0.1s; }
+        .value-card:nth-child(2) { animation-delay: 0.2s; }
+        .value-card:nth-child(3) { animation-delay: 0.3s; }
+        .value-card:nth-child(4) { animation-delay: 0.4s; }
+        .value-card:nth-child(5) { animation-delay: 0.5s; }
+        .value-card:nth-child(6) { animation-delay: 0.6s; }
+
+        [data-theme="dark"] .value-card {
+            background: rgba(30, 30, 30, 0.6);
+            border-color: rgba(92, 187, 246, 0.15);
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(74, 158, 204, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .value-card:hover::before {
+            left: 100%;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(74, 158, 204, 0.2);
+            border-color: var(--primary-color);
+            background: rgba(74, 158, 204, 0.08);
+        }
+
+        [data-theme="dark"] .value-card:hover {
+            background: rgba(92, 187, 246, 0.15);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: all 0.4s ease;
+        }
+
+        .value-card:hover .value-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .value-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .value-card p {
+            font-size: 0.98rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, rgba(74, 158, 204, 0.08) 0%, rgba(255, 107, 53, 0.04) 100%);
+            border: 1px solid rgba(74, 158, 204, 0.15);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .stat-box:nth-child(1) { animation-delay: 0.1s; }
+        .stat-box:nth-child(2) { animation-delay: 0.2s; }
+        .stat-box:nth-child(3) { animation-delay: 0.3s; }
+        .stat-box:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(74, 158, 204, 0.25);
+        }
+
+        .stat-number {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            font-weight: 800;
+            display: block;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(74, 158, 204, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border: 2px solid rgba(74, 158, 204, 0.2);
+            border-radius: 20px;
+            margin-top: 100px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(74, 158, 204, 0.2) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 25px rgba(74, 158, 204, 0.3);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(74, 158, 204, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 12px 20px;
+            }
+
+            .about-hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .about-hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-section h2 {
+                font-size: 2rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-statement {
+                padding: 30px 20px;
+            }
+
+            .mission-statement p {
+                font-size: 1.1rem;
+            }
+
+            .cta-section {
+                padding: 50px 20px;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">F</div>
+                flex<span>work</span>
+            </a>
+            <div class="nav-buttons">
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <a href="auth.html#login" class="btn login">Log In</a>
+                <a href="auth.html#signup" class="btn signup">Sign Up</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <div class="nav-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <a href="auth.html#login" class="btn login">Log In</a>
+            <a href="auth.html#signup" class="btn signup">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1>About FlexJobs</h1>
+            <p>Transforming the future of remote work, one authentic opportunity at a time</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <div class="about-content">
+        <section class="about-section">
+            <h2>Our Story</h2>
+            <p>FlexJobs was founded with a singular mission: to revolutionize how professionals discover legitimate remote work opportunities. In a landscape saturated with scams and unreliable listings, we recognized a critical gap in the market. Our founders understood firsthand the frustration of job seekers navigating through countless fraudulent postings, wasting valuable time and energy on positions that simply don't exist.</p>
+            <p>What began as a small initiative to curate genuine remote job listings has evolved into the world's largest platform dedicated to remote work. Today, FlexJobs serves millions of job seekers worldwide, providing them with expertly vetted opportunities from reputable companies. We've processed over 100,000 job listings, screening each one meticulously to ensure authenticity and legitimacy. Our commitment to quality over quantity has established FlexJobs as the gold standard in remote job placement.</p>
+            <p>From our headquarters to our distributed team across the globe, everyone at FlexJobs shares a common passion: empowering individuals to find meaningful work on their own terms. We believe that remote work is more than just a trend—it's a fundamental shift in how people work, and we're honored to be at the forefront of this transformation. Every day, we witness success stories of professionals landing their dream jobs, and those stories fuel our dedication to continuous improvement.</p>
+        </section>
+
+        <section class="mission-statement">
+            <p>"To provide job seekers with a trusted, secure platform where they can discover legitimate, high-quality remote work opportunities that match their skills, values, and aspirations."</p>
+        </section>
+
+        <section class="about-section">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">✓</div>
+                    <h3>Integrity</h3>
+                    <p>We operate with complete transparency, ensuring that every listing meets our rigorous standards for authenticity and legitimacy. Trust is earned through consistent, honest practices.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Excellence</h3>
+                    <p>We're committed to delivering exceptional service at every touchpoint. From job curation to customer support, we maintain the highest standards of quality and professionalism.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Empowerment</h3>
+                    <p>We believe in empowering individuals to take control of their careers. Our tools, resources, and support enable job seekers to make informed decisions and achieve their professional goals.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌍</div>
+                    <h3>Inclusivity</h3>
+                    <p>Remote work should be accessible to everyone, regardless of location or background. We're dedicated to breaking down barriers and creating opportunities for all professionals.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>We continuously evolve our platform with cutting-edge technology and features that enhance the job search experience. We listen to our users and adapt to their changing needs.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h3>Security</h3>
+                    <p>Your safety and privacy are paramount. We employ advanced security measures and rigorous verification processes to protect our community from fraud and exploitation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h2>By The Numbers</h2>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span class="stat-number">100K+</span>
+                    <span class="stat-label">Verified Job Listings</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Partner Companies</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">10M+</span>
+                    <span class="stat-label">Active Members</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">4.6★</span>
+                    <span class="stat-label">User Rating</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h2>Our Commitment to You</h2>
+            <p>At FlexJobs, we understand that finding the right job is one of the most important decisions in your life. That's why we've built a platform that prioritizes your success above all else. Our expert team manually reviews every single job listing that appears on our platform. We verify company information, authenticate job requirements, and ensure that the position aligns with our standards for remote work excellence.</p>
+            <p>We're not just a job board—we're your career partner. We provide comprehensive resources including interview tips, resume guides, career development courses, and personalized job matching to help you succeed. Our community forum connects you with other remote professionals, providing networking opportunities and shared experiences. Whether you're just starting your remote work journey or looking to advance your career, FlexJobs is with you every step of the way.</p>
+            <p>Your satisfaction matters to us, which is why we offer a 30-day satisfaction guarantee. If you don't find a job opportunity that meets your standards within 30 days, we'll refund your subscription. This guarantee reflects our unwavering confidence in the quality of our service and our commitment to your success in landing a remote position that truly fits your needs and aspirations.</p>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Start Your Remote Career?</h2>
+            <p>Join millions of professionals who have already discovered their perfect remote job on FlexJobs</p>
+            <button class="cta-button" onclick="window.location.href='auth.html#signup'">Get Started Today</button>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about-us.html">ABOUT US</a>
+            <a href="contact-us.html">CONTACT US</a>
+            <a href="#">TERMS AND CONDITIONS</a>
+            <a href="#">PRIVACY POLICY</a>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2007-2025 Flexjobs. All Rights Reserved.</p>
+            <p style="margin-top: 10px; font-size: 11px;">The content and design of this webpage are owned by respective copyright holders and may not be reproduced without permission.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
